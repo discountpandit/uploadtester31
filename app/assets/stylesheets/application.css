@@ -1,0 +1,20 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require html5boilerplate
+ *= require uploadify
+ *= require_self
+*/
+
+#container { margin: 20px; }
+h2 { font-size: 120%; font-weight: bold; margin: 5px 0 10px 0;}
+p { margin: 5px 0; }
+ul { padding: 0; margin: 0; list-style: none; }
+ul>li { width: 180px; height: 200px; display: -moz-inline-stack; display: inline-block; vertical-align: top; margin: 0 0px 5px 10px; zoom: 1; *display: inline; }
+ul.thumbs { margin-bottom: 20px; }
+ul#galleries { margin-bottom: 20px; }
+.actions { margin: 10px; }
+.delete a { color: red; }
+#flash .notice { background-color: #999; padding: 10px; }
+#flash { margin-bottom: 20px; }

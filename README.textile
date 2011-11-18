@@ -1,0 +1,30 @@
+h1. Upload tester
+
+This is a test app in Rails 3.1 for image uploads w/ uploadify, paperclip, and Amazon S3. I'm using it to evaluate Heroku, Dotcloud, and other hosting platforms for a larger project.
+
+It's not pretty, but it works well enough for testing, and as a reference application for using these tools with jQuery and Rails 3.1. You'll need to set up your own database.yml file.
+
+The code and config in this public repository is only the Heroku version. Some of the other platforms (such as Dotcloud) require me to check in my database.yml file, which isn't suitable for a public git repository.
+
+h1. Setup for various hosting platforms
+
+h2. Heroku
+
+@heroku create --stack cedar@
+
+@git push heroku master@
+
+@heroku run rake db:migrate@
+
+@heroku config:add S3_KEY=my_amazon_key@
+
+@heroku config:add S3_SECRET=my_amazon_secret@
+
+@heroku config:add S3_BUCKET=my_amazon_bucket@
+
+@# for using cloudfront - don't include http://@
+
+@heroku config:add S3_ALIAS_URL=my_cloundfront_url@
+
+Result: even after scaling to 4 dynos, upload and image-resizing speed is still rather disappointing.
+

@@ -1,0 +1,58 @@
+#progress
+
+%ul.thumbs= render 'thumbs'
+
+.clear
+
+%div{ :style => "position: relative;" }
+  %input#uploadify{ :name => 'uploadify', :type => 'file'}
+  %a{ :href => '', :style => "position: absolute; top: 0; z-index: -1;" }Add Image(s)
+
+:javascript
+  $(function() {
+      $('#uploadify').uploadify({  
+        uploader      : '/uploadify/uploadify.swf',
+        cancelImg     : '/uploadify/uploadify-cancel.png',
+        hideButton    : true,
+        script        : "#{add_image_gallery_path(@gallery.id)}",
+        wmode         : 'transparent',
+        height        : 10,
+        // fileDataName  : 'file',
+        multi         : true,
+        auto          : true, 
+        sizeLimit     : #{ MAX_IMAGE_SIZE },
+        fileDesc      : 'Image files',
+        fileExt       : '*.jpg;*.jpeg;*.gif;*.png',
+        scriptData    : {
+           '_http_accept': 'application/javascript',
+           '_method': 'put',
+           '#{ session_key_name }' : encodeURIComponent('#{ u cookies[session_key_name] }'),
+           'authenticity_token': encodeURIComponent('#{ u form_authenticity_token }'),
+        },
+        onComplete : function(event, queueID, fileObj, response, data) {
+          if (response.substr(0,8) == 'An error') {
+            $('#flash').append('<div class="error">' + response + '</div>');
+          } else {
+            $('.thumbs').html(response)
+          }
+        },
+        onAllComplete : function(event, data) { 
+          $('#progress').html('');
+        },
+        onSelect: function(event, queueID, fileObj){
+          if (fileObj.size > #{ MAX_IMAGE_SIZE }) {
+            alert('The image' + fileObj.name + ' is too large.')
+              return false;
+          }
+          $('#progress').html("processing... " + '<img src="/images/indicator.gif" alt="processing" />');
+        },  
+      });
+  });
+  $(".delete_image").live('click', function(e) {
+    e.preventDefault();
+    $.post("#{delete_image_gallery_path(@gallery.id)}", { image_id : e.target.id },
+      function(response) {
+         $('.thumbs').html(response);
+      });
+    });
+  

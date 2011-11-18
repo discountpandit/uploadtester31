@@ -1,0 +1,4 @@
+- @gallery.images.each do |i|
+  %li.thumb{ :id => "i_#{i.id}" }
+    = image_tag(i.asset.url(:square_thumb, false))
+    %p= link_to 'Delete', '#', :confirm => 'Are you sure?', :class => 'delete_image', :id => "del_#{i.id}"

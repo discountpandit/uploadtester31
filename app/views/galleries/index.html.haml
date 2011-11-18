@@ -1,0 +1,13 @@
+%h2 Image Galleries
+
+%ul#galleries
+  - @galleries.each do |gallery|
+    %li
+      = gallery_thumbnail(gallery)
+      %p.caption= link_to gallery.name, gallery
+      %p.delete= link_to 'delete gallery', gallery_path(gallery), :confirm => 'Are you sure?', :method => :delete
+
+%br
+%br
+
+%p= link_to 'create a gallery', new_gallery_path
